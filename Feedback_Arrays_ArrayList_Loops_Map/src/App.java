@@ -60,6 +60,8 @@ public class App {
                 }
             }
         }
+
+        scanner.close();
         
         System.out.println("\nINVENTARIO TOTAL");
 
