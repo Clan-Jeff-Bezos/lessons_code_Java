@@ -1,0 +1,4 @@
+// TODOS DEBEN TENER AL MENOS 1 ATRIBUTO Y 1 MÉTODO
+Crea una clase Punto que represente un punto en el plano cartesiano.
+Crea una clase Rectángulo que represente un rectángulo en el plano.
+Crea una clase CuentaBancaria que representa una cuenta bancaria de un cliente.
