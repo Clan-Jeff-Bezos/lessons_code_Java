@@ -5,7 +5,8 @@ public class Animal {
     private String name;
 
     // Contructor vacio
-
+    public Animal() {
+    }
 
     // Contructor con todos los atributos
     public Animal(String name, String type) {
@@ -18,6 +19,10 @@ public class Animal {
         this.name = name;
     }
 
+    public void editAll(String name, String type){
+        this.name = name;
+        this.type = type;
+    }
 
     public String getName() {
         return name;
