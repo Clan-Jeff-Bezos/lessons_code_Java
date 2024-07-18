@@ -1,10 +1,13 @@
 package ejemploTaller;
 
 public class Punto {
-    private Integer x;
-    private Integer y;
+    private Integer x = -2;
+    protected Integer y = -1;
 
-    void cuadrante(){
+    public void cuadrante(){
+        if ((this.x) == null){
+            System.out.println("Hola");
+        }
         if (this.x > 0 && this.y > 0) {
             System.out.println("First quadrant: (+,+)");
         } else if (this.x < 0 && this.y < 0) {
