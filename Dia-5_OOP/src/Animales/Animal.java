@@ -4,6 +4,7 @@ public class Animal {
     private String type;
     private String name;
 
+
     // Contructor vacio
     public Animal() {
     }
