@@ -1,5 +1,6 @@
 package model;
 
+import controller.StudentController;
 import entity.Student;
 import persistence.ConfigDB;
 
@@ -54,12 +55,81 @@ public class StudentModel implements CRUDGeneric {
 
     @Override
     public Object readById(int id) {
-        return null;
+        // Open connection
+        Connection connection = ConfigDB.openConnection();
+
+        Student student = null;
+
+        try {
+            // Create SQL
+            String sqlQuery = "SELECT * FROM student WHERE id = ?;";
+
+            // Prepared statement
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+
+            // Assign to ?
+            preparedStatement.setInt(1,id);
+
+            // Execute
+            preparedStatement.execute();
+
+            ResultSet result = preparedStatement.getResultSet();
+
+            while (result.next()){
+                student = new Student(
+                        result.getInt("id"),
+                        result.getString("name"),
+                        result.getInt("age")
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        ConfigDB.closeConnection();
+        return student;
     }
 
     @Override
     public ArrayList<Object> readAll() {
-        return null;
+        // Open connection
+        Connection connection = ConfigDB.openConnection();
+
+        // Instance arrayList<Student>
+        ArrayList<Object> students = new ArrayList<>();
+
+        try {
+            // Create SQL query
+            String sqlQuery = "SELECT * FROM student;";
+
+            // Create prepared Statement
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+
+            // execute query
+            preparedStatement.execute();
+
+            // get result
+            ResultSet result = preparedStatement.getResultSet();
+
+            while (result.next()) {
+                Student student = new Student(
+                        result.getInt("id"),
+                        result.getString("name"),
+                        result.getInt("age")
+                );
+
+                students.add(student);
+            }
+
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        ConfigDB.closeConnection();
+        return students;
     }
 
     @Override
@@ -69,6 +139,23 @@ public class StudentModel implements CRUDGeneric {
 
     @Override
     public Boolean delete(int id) {
-        return null;
+
+        Connection connection = ConfigDB.openConnection();
+
+        boolean flag;
+
+        try {
+            String sqlQuery = "DELETE * FROM student WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+
+            preparedStatement.setInt(1,id);
+
+            flag = preparedStatement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return flag;
     }
 }

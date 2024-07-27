@@ -48,6 +48,6 @@ public class Student {
                 " id: " + this.id +
                 " name: " + this.name +
                 " age: " + this.age +
-                " }";
+                " } \n";
     }
 }
