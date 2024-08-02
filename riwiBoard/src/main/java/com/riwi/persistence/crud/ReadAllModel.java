@@ -1,4 +1,7 @@
 package com.riwi.persistence.crud;
 
-public interface ReadAllModel {
+import java.util.List;
+
+public interface ReadAllModel<Entity> {
+    public List<Entity> readAll(int size, int numberPage);
 }

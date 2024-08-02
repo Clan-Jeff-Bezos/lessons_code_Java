@@ -6,7 +6,10 @@ import com.riwi.persistence.imodel.IUserModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserModelImpl implements IUserModel {
     @Override
@@ -44,5 +47,36 @@ public class UserModelImpl implements IUserModel {
     @Override
     public void delete(String id) {
 
+    }
+
+    @Override
+    public List<UserEntity> readAll(int size, int numberPage) {
+        List<UserEntity> userEntities = new ArrayList<>();
+        Connection connection = MysqlConfig.openConnection();
+
+        try{
+            String sql = "SELECT * FROM user LIMIT ? OFFSET ?; ";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, size);
+            preparedStatement.setInt(2, (numberPage-1)*size);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                UserEntity user = new UserEntity(
+                        resultSet.getString("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password")
+                );
+                userEntities.add(user);
+            }
+            preparedStatement.close();
+            resultSet.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            MysqlConfig.closeConnection();
+        }
+        return userEntities;
     }
 }

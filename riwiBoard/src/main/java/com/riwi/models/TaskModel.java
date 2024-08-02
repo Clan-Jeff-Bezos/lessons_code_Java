@@ -11,6 +11,10 @@ public class TaskModel implements ITaskModel {
 
     @Override
     public void delete(Integer integer) {
+    }
 
+    @Override
+    public Task readByID(Integer integer) {
+        return null;
     }
 }

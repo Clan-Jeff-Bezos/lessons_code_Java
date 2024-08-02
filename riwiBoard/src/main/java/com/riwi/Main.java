@@ -4,21 +4,48 @@ import com.riwi.controllers.UserController;
 import com.riwi.entities.UserEntity;
 
 import javax.swing.*;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
         UserController userController = new UserController();
 
-        String id = JOptionPane.showInputDialog("insert to id");
-        String name = JOptionPane.showInputDialog("insert to name");
-        String email = JOptionPane.showInputDialog("insert to email");
-        String password = JOptionPane.showInputDialog("insert to password");
+        boolean isMenuOpened = true;
+        while(isMenuOpened) {
+            String option = JOptionPane.showInputDialog("Ingresa la op");
+            switch (option) {
+                case "0" -> isMenuOpened = false;
+                case "2" -> {
+                    JOptionPane.showMessageDialog(null, "Leyendo los usuarios");
+                    String pageSize = JOptionPane.showInputDialog("Ingresa cuantos quieres ver por pagina: ");
+                    int numberPage = 1;
 
-        UserEntity user = new UserEntity(id,name,email,password);
+                    String confirm;
+                    do {
+                        List<UserEntity> userList = userController.readAll(Integer.parseInt(pageSize), numberPage);
+                        if (userList.isEmpty()){
+                            JOptionPane.showMessageDialog(null, "No hay más paginas");
+                            break;
+                        }
 
-        UserEntity user2 = userController.create(user);
+                        confirm = JOptionPane.showInputDialog(null, "Page: "+ numberPage + "\n" + userList
+                        + "\n" + "prev or next");
 
-        JOptionPane.showMessageDialog(null, user2);
+                        if (confirm.equalsIgnoreCase("prev")){
+                            numberPage--;
+
+                            if (numberPage<1){
+                                numberPage = 1;
+                            }
+                        } else if (confirm.equalsIgnoreCase("next")) {
+                            numberPage++;
+                        }
+
+                    }while(confirm.equalsIgnoreCase("next") || confirm.equalsIgnoreCase("prev"));
+
+                }
+            }
+        }
     }
 }
