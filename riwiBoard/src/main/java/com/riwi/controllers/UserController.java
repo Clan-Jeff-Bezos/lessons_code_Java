@@ -16,4 +16,8 @@ public class UserController {
     public List<UserEntity> readAll(int size, int numberPage) {
         return this.userModel.readAll(size, numberPage);
     }
+
+    public UserEntity readByEmail(String email) {
+        return this.userModel.readByEmail(email);
+    }
 }

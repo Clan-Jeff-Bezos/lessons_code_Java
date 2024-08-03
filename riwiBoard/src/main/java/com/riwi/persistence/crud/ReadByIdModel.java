@@ -1,5 +1,5 @@
 package com.riwi.persistence.crud;
 
-public interface ReadModel<ID, Entity> {
+public interface ReadByIdModel<ID, Entity> {
     public Entity readByID(ID id);
 }

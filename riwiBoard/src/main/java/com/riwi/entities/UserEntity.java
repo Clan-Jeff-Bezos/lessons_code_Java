@@ -50,9 +50,9 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        return  " id: " + this.id +
+        return  "id: " + this.id +
                 ", name: " + this.name +
                 ", email: " + this.email +
-                ", password: " + this.password ;
+                ", password: " + this.password + "\n";
     }
 }

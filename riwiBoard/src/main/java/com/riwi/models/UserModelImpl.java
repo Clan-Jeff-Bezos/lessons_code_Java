@@ -45,11 +45,6 @@ public class UserModelImpl implements IUserModel {
     }
 
     @Override
-    public void delete(String id) {
-
-    }
-
-    @Override
     public List<UserEntity> readAll(int size, int numberPage) {
         List<UserEntity> userEntities = new ArrayList<>();
         Connection connection = MysqlConfig.openConnection();
@@ -73,10 +68,44 @@ public class UserModelImpl implements IUserModel {
             preparedStatement.close();
             resultSet.close();
         }catch (SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }finally {
             MysqlConfig.closeConnection();
         }
         return userEntities;
+    }
+
+    @Override
+    public UserEntity readByEmail(String email) {
+        Connection connection = MysqlConfig.openConnection();
+
+        UserEntity user = new UserEntity();
+
+        try {
+            String sqlQuery = "SELECT * FROM user WHERE email = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+
+            preparedStatement.setString(1, email);
+
+            preparedStatement.execute();
+
+            ResultSet result = preparedStatement.getResultSet();
+
+            while (result.next()){
+                user = new UserEntity(
+                        result.getString("id"),
+                        result.getString("name"),
+                        result.getString("email"),
+                        result.getString("password")
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        MysqlConfig.closeConnection();
+        return user;
     }
 }
