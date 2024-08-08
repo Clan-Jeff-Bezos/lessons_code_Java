@@ -117,6 +117,7 @@ public class StudentModel implements CRUDGeneric {
                         result.getInt("id"),
                         result.getString("name"),
                         result.getInt("age")
+
                 );
 
                 students.add(student);
@@ -126,9 +127,10 @@ public class StudentModel implements CRUDGeneric {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            ConfigDB.closeConnection();
         }
 
-        ConfigDB.closeConnection();
         return students;
     }
 

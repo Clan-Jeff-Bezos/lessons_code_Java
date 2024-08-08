@@ -4,6 +4,7 @@ public class Vehicles extends AbstractVehicles{
     // Attribute
     private String model;
     private String brand;
+    private static String name = "hola";
 
     // Constructor
     // Empty
@@ -19,7 +20,16 @@ public class Vehicles extends AbstractVehicles{
         System.out.println("I'm class father");
     }
 
+    // Method static
+    public static void status(){
+        System.out.println("Funciona");
+    }
+
     // Getter
+    public String getName(){
+        return name;
+    }
+
     public String getBrand() {
         return this.brand;
     }
@@ -29,6 +39,10 @@ public class Vehicles extends AbstractVehicles{
     }
 
     // Setter
+    public void setName(String nameNew){
+        name = nameNew;
+    }
+
     public void setBrand(String brand){
         this.brand = brand;
     }
